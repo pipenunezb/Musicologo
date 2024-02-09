@@ -4,13 +4,14 @@ import {
   PressableProps,
   PressableStateCallbackType,
   StyleProp,
+  StyleSheet,
   TextStyle,
   ViewStyle,
 } from "react-native"
-import { colors, spacing, typography } from "../theme"
+import { borderRadius, colors, opacity, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
-type Presets = keyof typeof $viewPresets
+type Presets = "default" | "filled" | "reversed"
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -93,34 +94,26 @@ export function Button(props: ButtonProps) {
     text,
     txOptions,
     style: $viewStyleOverride,
-    pressedStyle: $pressedViewStyleOverride,
     textStyle: $textStyleOverride,
-    pressedTextStyle: $pressedTextStyleOverride,
-    disabledTextStyle: $disabledTextStyleOverride,
     children,
     RightAccessory,
     LeftAccessory,
     disabled,
-    disabledStyle: $disabledViewStyleOverride,
     ...rest
   } = props
 
   const preset: Presets = props.preset ?? "default"
   function $viewStyle({ pressed }: PressableStateCallbackType) {
     return [
+      styles.baseView,
       $viewPresets[preset],
       $viewStyleOverride,
-      !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
-      !!disabled && $disabledViewStyleOverride,
+      !!pressed && styles.pressedView,
+      !!disabled && styles.disabled,
     ]
   }
-  function $textStyle({ pressed }: PressableStateCallbackType) {
-    return [
-      $textPresets[preset],
-      $textStyleOverride,
-      !!pressed && [$pressedTextPresets[preset], $pressedTextStyleOverride],
-      !!disabled && $disabledTextStyleOverride,
-    ]
+  function $textStyle() {
+    return [styles.baseText, $textPresets[preset], $textStyleOverride]
   }
 
   return (
@@ -154,62 +147,49 @@ export function Button(props: ButtonProps) {
   )
 }
 
-const $baseViewStyle: ViewStyle = {
-  minHeight: 56,
-  borderRadius: 4,
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "row",
-  paddingVertical: spacing.sm,
-  paddingHorizontal: spacing.sm,
-  overflow: "hidden",
-}
-
-const $baseTextStyle: TextStyle = {
-  fontSize: 16,
-  lineHeight: 20,
-  fontFamily: typography.primary.medium,
-  textAlign: "center",
-  flexShrink: 1,
-  flexGrow: 0,
-  zIndex: 2,
-}
+const styles = StyleSheet.create({
+  baseText: {
+    flexGrow: 0,
+    flexShrink: 1,
+    fontFamily: typography.primary.medium,
+    fontSize: 16,
+    lineHeight: 20,
+    textAlign: "center",
+    zIndex: 2,
+  },
+  baseView: {
+    alignItems: "center",
+    borderRadius: borderRadius.md,
+    flexDirection: "row",
+    justifyContent: "center",
+    minHeight: 56,
+    overflow: "hidden",
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
+  },
+  disabled: {
+    opacity: opacity.disabled,
+  },
+  pressedView: {
+    opacity: opacity.pressed,
+  },
+})
 
 const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
 const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
 
-const $viewPresets = {
-  default: [
-    $baseViewStyle,
-    {
-      borderWidth: 1,
-      borderColor: colors.palette.neutral400,
-      backgroundColor: colors.palette.neutral100,
-    },
-  ] as StyleProp<ViewStyle>,
-
-  filled: [$baseViewStyle, { backgroundColor: colors.palette.neutral300 }] as StyleProp<ViewStyle>,
-
-  reversed: [
-    $baseViewStyle,
-    { backgroundColor: colors.palette.neutral800 },
-  ] as StyleProp<ViewStyle>,
+const $viewPresets: Record<Presets, StyleProp<ViewStyle>> = {
+  default: {
+    borderWidth: 1,
+    borderColor: colors.palette.primary300,
+    backgroundColor: colors.transparent,
+  },
+  filled: { backgroundColor: colors.palette.primary300 },
+  reversed: { backgroundColor: colors.palette.neutral800 },
 }
 
 const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: $baseTextStyle,
-  filled: $baseTextStyle,
-  reversed: [$baseTextStyle, { color: colors.palette.neutral100 }],
-}
-
-const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: { backgroundColor: colors.palette.neutral200 },
-  filled: { backgroundColor: colors.palette.neutral400 },
-  reversed: { backgroundColor: colors.palette.neutral700 },
-}
-
-const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: { opacity: 0.9 },
-  filled: { opacity: 0.9 },
-  reversed: { opacity: 0.9 },
+  default: { color: colors.palette.primary300 },
+  filled: { color: colors.palette.neutral100 },
+  reversed: { color: colors.palette.neutral100 },
 }

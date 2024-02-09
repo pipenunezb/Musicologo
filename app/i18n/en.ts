@@ -1,9 +1,31 @@
 const en = {
+  HomeScreens: {
+    HomeScreen: {
+      name: "Home",
+      sections: {
+        popular: "Popular",
+        recentlyPlayed: "Recently Played",
+      },
+    },
+    LibraryScreen: {
+      name: "Library",
+      title: "Your Library",
+    },
+    ProfileScreen: {
+      name: "Profile",
+    },
+    SearchScreen: {
+      name: "Search",
+      searchPlaceholder: "Search",
+      notFound: "No results found",
+    },
+  },
   common: {
     ok: "OK!",
     cancel: "Cancel",
     back: "Back",
     logOut: "Log Out",
+    appName: "Musicologo",
   },
   welcomeScreen: {
     postscript:

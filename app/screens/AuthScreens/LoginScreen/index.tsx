@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite"
 import React, { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 import { TextInput, TextStyle, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
-import { useStores } from "../models"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../../../components"
+import { useStores } from "../../../models"
+import { AppStackScreenProps } from "../../../navigators"
+import { colors, spacing } from "../../../theme"
 
-interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
+interface LoginScreenProps extends AppStackScreenProps<"LoginScreen"> {}
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
   const authPasswordInput = useRef<TextInput>(null)
@@ -56,7 +56,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         return (
           <Icon
             icon={isAuthPasswordHidden ? "view" : "hidden"}
-            color={colors.palette.neutral800}
+            color={colors.palette.primary200}
             containerStyle={props.style}
             size={20}
             onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
@@ -70,10 +70,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     <Screen
       preset="auto"
       contentContainerStyle={$screenContentContainer}
+      backgroundColor={colors.palette.primary600}
       safeAreaEdges={["top", "bottom"]}
     >
       <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
       {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
 
       <TextField
@@ -110,7 +110,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         testID="login-button"
         tx="loginScreen.tapToSignIn"
         style={$tapButton}
-        preset="reversed"
+        preset="filled"
         onPress={login}
       />
     </Screen>
@@ -124,10 +124,6 @@ const $screenContentContainer: ViewStyle = {
 
 const $signIn: TextStyle = {
   marginBottom: spacing.sm,
-}
-
-const $enterDetails: TextStyle = {
-  marginBottom: spacing.lg,
 }
 
 const $hint: TextStyle = {

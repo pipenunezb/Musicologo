@@ -1,14 +1,65 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require('expo/metro-config');
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { getDefaultConfig } = require("metro-config")
+const { getDefaultConfig: getDefaultExpoConfig } = require("@expo/metro-config")
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+let metroConfig
+let isExpo = false
+try {
+  const Constants = require("expo-constants")
+  // True if the app is running in an `expo build` app or if it's running in Expo Go.
+  isExpo =
+    Constants.executionEnvironment === "standalone" ||
+    Constants.executionEnvironment === "storeClient"
+} catch {}
 
-config.transformer.getTransformOptions = async () => ({
-  transform: {
-    experimentalImportSupport: false,
-    inlineRequires: true,
-  },
-});
+if (isExpo) {
+  /**
+   *  Expo metro config
+   * Learn more https://docs.expo.io/guides/customizing-metro
 
-module.exports = config;
+   * For one idea on how to support symlinks in Expo, see:
+   * https://github.com/infinitered/ignite/issues/1904#issuecomment-1054535068
+   */
+  metroConfig = getDefaultExpoConfig(__dirname)
+} else {
+  /**
+   * Vanilla metro config - we're using a custom metro config because we want to support symlinks
+   * out of the box. This allows you to use pnpm and/or play better in a monorepo.
+   *
+   * You can safely delete this file and remove @rnx-kit/metro-* if you're not
+   * using PNPM or monorepo or symlinks at all.
+   *
+   * However, it doesn't hurt to have it either.
+   */
+  const { makeMetroConfig } = require("@rnx-kit/metro-config")
+  const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
+
+  metroConfig = (async () => {
+    const defaultConfig = await getDefaultConfig()
+    const {
+      resolver: { sourceExts, assetExts },
+    } = defaultConfig
+
+    return makeMetroConfig({
+      projectRoot: __dirname,
+      resolver: {
+        resolveRequest: MetroSymlinksResolver(),
+        assetExts: [...assetExts.filter((ext) => ext !== "svg"), "bin"],
+        sourceExts: [...sourceExts, "svg"],
+      },
+      transformer: {
+        babelTransformerPath: require.resolve("react-native-svg-transformer"),
+        getTransformOptions: async () => ({
+          transform: {
+            experimentalImportSupport: false,
+            inlineRequires: true,
+          },
+        }),
+      },
+    })
+  })()
+}
+
+module.exports = metroConfig

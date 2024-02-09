@@ -30,14 +30,14 @@ import {
   Screen,
   Text,
   Toggle,
-} from "../components"
-import { isRTL, translate } from "../i18n"
-import { useStores } from "../models"
-import { Episode } from "../models/Episode"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
-import { delay } from "../utils/delay"
-import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+} from "../../components"
+import { isRTL, translate } from "../../i18n"
+import { useStores } from "../../models"
+import { Episode } from "../../models/Episode"
+import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
+import { colors, spacing } from "../../theme"
+import { delay } from "../../utils/delay"
+import { openLinkInBrowser } from "../../utils/openLinkInBrowser"
 
 const ICON_SIZE = 14
 
