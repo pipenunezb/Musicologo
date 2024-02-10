@@ -8,10 +8,10 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native"
-import { borderRadius, colors, opacity, spacing, typography } from "../theme"
-import { Text, TextProps } from "./Text"
+import { borderRadius, colors, opacity, spacing, typography } from "../../theme"
+import { Text, TextProps } from "../Text"
 
-type Presets = "default" | "filled" | "reversed"
+type Presets = "filled" | "reversed"
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -102,7 +102,7 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
-  const preset: Presets = props.preset ?? "default"
+  const preset: Presets = props.preset ?? "filled"
   function $viewStyle({ pressed }: PressableStateCallbackType) {
     return [
       styles.baseView,
@@ -112,9 +112,7 @@ export function Button(props: ButtonProps) {
       !!disabled && styles.disabled,
     ]
   }
-  function $textStyle() {
-    return [styles.baseText, $textPresets[preset], $textStyleOverride]
-  }
+  const $textStyle = [styles.baseText, $textPresets[preset], $textStyleOverride]
 
   return (
     <Pressable
@@ -130,7 +128,7 @@ export function Button(props: ButtonProps) {
             <LeftAccessory style={$leftAccessoryStyle} pressableState={state} disabled={disabled} />
           )}
 
-          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
+          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle}>
             {children}
           </Text>
 
@@ -179,17 +177,11 @@ const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
 const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
 
 const $viewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: {
-    borderWidth: 1,
-    borderColor: colors.palette.primary300,
-    backgroundColor: colors.transparent,
-  },
   filled: { backgroundColor: colors.palette.primary300 },
   reversed: { backgroundColor: colors.palette.neutral800 },
 }
 
 const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: { color: colors.palette.primary300 },
   filled: { color: colors.palette.neutral100 },
   reversed: { color: colors.palette.neutral100 },
 }

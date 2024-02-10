@@ -1,4 +1,4 @@
-import { Screen, Text, TextField } from "app/components"
+import { Screen, Text, TextField, Toggle } from "app/components"
 import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC, useEffect, useState } from "react"
@@ -39,6 +39,7 @@ export const SearchScreen: FC<SearchScreenProps> = ({ navigation }) => {
           )}
         />
         <Text tx="HomeScreens.SearchScreen.notFound" />
+        <Toggle variant="switch" label="Hello there" />
       </View>
     </Screen>
   )

@@ -1,6 +1,7 @@
 import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
 import {
   StyleProp,
+  StyleSheet,
   TextInput,
   TextInputProps,
   TextStyle,
@@ -8,9 +9,9 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { isRTL, translate } from "../i18n"
-import { borderRadius, colors, opacity, spacing, typography } from "../theme"
-import { Text, TextProps } from "./Text"
+import { isRTL, translate } from "../../i18n"
+import { borderRadius, colors, opacity, spacing, typography } from "../../theme"
+import { Text, TextProps } from "../Text"
 
 export interface TextFieldAccessoryProps {
   style: StyleProp<any>
@@ -118,9 +119,9 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     LeftAccessory,
     HelperTextProps,
     LabelTextProps,
-    style: $inputStyleOverride,
-    containerStyle: $containerStyleOverride,
-    inputWrapperStyle: $inputWrapperStyleOverride,
+    style,
+    containerStyle,
+    inputWrapperStyle,
     ...TextInputProps
   } = props
   const input = useRef<TextInput>(null)
@@ -131,29 +132,25 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     ? translate(placeholderTx, placeholderTxOptions)
     : placeholder
 
-  const $containerStyles = [$containerStyleOverride]
-
-  const $labelStyles = [$labelStyle, LabelTextProps?.style]
+  const $labelStyles = [styles.labelStyle, LabelTextProps?.style]
 
   const $inputWrapperStyles = [
-    $inputWrapperStyle,
+    styles.inputWrapperStyle,
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
-    LeftAccessory && { paddingStart: 0 },
-    RightAccessory && { paddingEnd: 0 },
-    $inputWrapperStyleOverride,
+    inputWrapperStyle,
   ]
 
   const $inputStyles: StyleProp<TextStyle> = [
-    $inputStyle,
+    styles.inputStyle,
     disabled && { opacity: opacity.disabled },
-    isRTL && { textAlign: "right" as TextStyle["textAlign"] },
+    isRTL && { textAlign: "right" },
     TextInputProps.multiline && { height: "auto" },
-    $inputStyleOverride,
+    style,
   ]
 
   const $helperStyles = [
-    $helperStyle,
+    styles.helperStyle,
     status === "error" && { color: colors.error },
     HelperTextProps?.style,
   ]
@@ -169,7 +166,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   return (
     <TouchableOpacity
       activeOpacity={1}
-      style={$containerStyles}
+      style={containerStyle}
       onPress={focusInput}
       accessibilityState={{ disabled }}
     >
@@ -187,7 +184,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       <View style={$inputWrapperStyles}>
         {!!LeftAccessory && (
           <LeftAccessory
-            style={$leftAccessoryStyle}
+            style={styles.leftAccessoryStyle}
             status={status}
             editable={!disabled}
             multiline={TextInputProps.multiline ?? false}
@@ -207,7 +204,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
         {!!RightAccessory && (
           <RightAccessory
-            style={$rightAccessoryStyle}
+            style={styles.rightAccessoryStyle}
             status={status}
             editable={!disabled}
             multiline={TextInputProps.multiline ?? false}
@@ -229,43 +226,43 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   )
 })
 
-const $labelStyle: TextStyle = {
-  marginBottom: spacing.xs,
-}
-
-const $inputWrapperStyle: ViewStyle = {
-  minHeight: 56,
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
-  borderRadius: borderRadius.md,
-  backgroundColor: colors.palette.primary400,
-  borderColor: colors.palette.neutral400,
-  overflow: "hidden",
-}
-
-const $inputStyle: TextStyle = {
-  flex: 1,
-  fontFamily: typography.primary.normal,
-  color: colors.text,
-  fontSize: 16,
-  paddingHorizontal: 0,
-  marginHorizontal: spacing.sm,
-}
-
-const $helperStyle: TextStyle = {
-  marginTop: spacing.xs,
-}
-
-const $rightAccessoryStyle: ViewStyle = {
-  marginEnd: spacing.xs,
-  height: 40,
-  justifyContent: "center",
-  alignItems: "center",
-}
-const $leftAccessoryStyle: ViewStyle = {
-  marginStart: spacing.xs,
-  height: 40,
-  justifyContent: "center",
-  alignItems: "center",
-}
+const styles = StyleSheet.create({
+  helperStyle: {
+    marginTop: spacing.xs,
+  },
+  inputStyle: {
+    color: colors.text,
+    flex: 1,
+    fontFamily: typography.primary.normal,
+    fontSize: 16,
+    marginHorizontal: spacing.sm,
+    paddingHorizontal: 0,
+  },
+  inputWrapperStyle: {
+    alignItems: "center",
+    backgroundColor: colors.palette.primary400,
+    borderColor: colors.palette.primary400,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    minHeight: 56,
+    overflow: "hidden",
+    width: "100%",
+  },
+  labelStyle: {
+    marginBottom: spacing.xs,
+  },
+  leftAccessoryStyle: {
+    alignItems: "center",
+    height: 40,
+    justifyContent: "center",
+    marginStart: spacing.xs,
+  },
+  rightAccessoryStyle: {
+    alignItems: "center",
+    height: 40,
+    justifyContent: "center",
+    marginStart: spacing.xs,
+  },
+})
