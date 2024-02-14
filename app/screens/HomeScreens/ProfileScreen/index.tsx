@@ -4,11 +4,11 @@ import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
-import Icon from "react-native-vector-icons/MaterialIcons"
+import Icon from "react-native-vector-icons/Entypo"
 
 interface ProfileScreenProps extends HomeTabScreenProps<"ProfileScreen"> {}
 
-export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
+export const ProfileScreen: FC<ProfileScreenProps> = () => {
   const {
     authenticationStore: { logout },
   } = useStores()
@@ -30,7 +30,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
         <View style={styles.nameContainer}>
           {isArtist && <View style={styles.emptyView} />}
           <Text text="Jane Doe" preset="subheading" />
-          {isArtist && <Icon name="verified" size={24} color={colors.palette.primary300} />}
+          {isArtist && <Icon name="modern-mic" size={24} color={colors.palette.primary300} />}
         </View>
         <Text style={styles.followersText} text="120 followers" />
         <View style={styles.footer}>

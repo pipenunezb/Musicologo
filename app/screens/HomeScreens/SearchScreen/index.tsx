@@ -1,4 +1,4 @@
-import { Screen, Text, TextField, Toggle } from "app/components"
+import { Screen, Text, TextField } from "app/components"
 import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC, useEffect, useState } from "react"
@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 interface SearchScreenProps extends HomeTabScreenProps<"SearchScreen"> {}
 
-export const SearchScreen: FC<SearchScreenProps> = ({ navigation }) => {
+export const SearchScreen: FC<SearchScreenProps> = () => {
   const [searchText, setSearchText] = useState<string>("")
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { PlaylistCard } from "app/components/Core/PlaylistCard"
 
 interface LibraryScreenProps extends HomeTabScreenProps<"LibraryScreen"> {}
 
-export const LibraryScreen: FC<LibraryScreenProps> = ({ navigation }) => {
+export const LibraryScreen: FC<LibraryScreenProps> = () => {
   return (
     <Screen
       preset="scroll"

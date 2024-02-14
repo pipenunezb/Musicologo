@@ -1,14 +1,18 @@
-import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import {
+  BottomTabBar,
+  BottomTabScreenProps,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs"
 import { CompositeScreenProps } from "@react-navigation/native"
 import React from "react"
-import { TextStyle, ViewStyle } from "react-native"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { translate } from "../i18n"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import * as HomeScreens from "app/screens/HomeScreens"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Text } from "app/components"
+import { NowPlaying } from "app/components/Core/NowPlaying"
 
 export type HomeTabParamList = {
   HomeScreen: undefined
@@ -29,6 +33,12 @@ export function HomeNavigator() {
 
   return (
     <Tab.Navigator
+      tabBar={(props) => (
+        <View style={$tabBar}>
+          <NowPlaying />
+          <BottomTabBar {...props} />
+        </View>
+      )}
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
@@ -54,7 +64,7 @@ export function HomeNavigator() {
             <Icon
               name="home"
               color={focused ? colors.palette.neutral100 : colors.palette.primary200}
-              size={30}
+              size={24}
             />
           ),
         }}
@@ -74,7 +84,7 @@ export function HomeNavigator() {
             <Icon
               name="search"
               color={focused ? colors.palette.neutral100 : colors.palette.primary200}
-              size={30}
+              size={24}
             />
           ),
         }}
@@ -92,9 +102,9 @@ export function HomeNavigator() {
           ),
           tabBarIcon: ({ focused }) => (
             <Icon
-              name="library"
+              name="albums"
               color={focused ? colors.palette.neutral100 : colors.palette.primary200}
-              size={30}
+              size={24}
             />
           ),
         }}
@@ -114,7 +124,7 @@ export function HomeNavigator() {
             <Icon
               name="person"
               color={focused ? colors.palette.neutral100 : colors.palette.primary200}
-              size={30}
+              size={24}
             />
           ),
         }}

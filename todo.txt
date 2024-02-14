@@ -1,0 +1,19 @@
+- ActionsSheet integration
+    - NowPlaying component
+- PlaylistDetail screen
+
+- Connect supabase
+  - GET getPopular (trackList)
+  - GET getRecentlyPlayed (trackList)
+  - GET searchTrackOrArtist (tacks and artists)
+  - GET trackDetails
+  - GET getMyLibrary (playlists)
+  - GET getPlaylist (playlist)
+  - GET getMyProfile
+
+  - POST createPlaylist
+  - POST updatePlaylist
+  - POST addToFavorites
+  - POST addTrackToPlaylist
+  - POST followArtist
+  - POST playedTrack

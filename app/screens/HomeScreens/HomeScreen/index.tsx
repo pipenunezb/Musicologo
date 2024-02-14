@@ -9,11 +9,10 @@ import { DUMMY_TRACKS } from "./dummyTracks"
 
 interface HomeScreenProps extends HomeTabScreenProps<"HomeScreen"> {}
 
-export const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
+export const HomeScreen: FC<HomeScreenProps> = () => {
   return (
     <Screen
       preset="auto"
-      contentContainerStyle={styles.container}
       backgroundColor={colors.palette.primary600}
       safeAreaEdges={["top", "bottom"]}
     >
@@ -35,9 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: spacing.md,
     padding: spacing.md,
-  },
-  container: {
-    flex: 1,
   },
   row: {
     alignItems: "center",
