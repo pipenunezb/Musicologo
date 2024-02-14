@@ -39,7 +39,6 @@ export const SearchScreen: FC<SearchScreenProps> = ({ navigation }) => {
           )}
         />
         <Text tx="HomeScreens.SearchScreen.notFound" />
-        <Toggle variant="switch" label="Hello there" />
       </View>
     </Screen>
   )
