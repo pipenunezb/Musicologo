@@ -1,13 +1,13 @@
 import { Text } from "app/components"
 import { FlatList, View } from "react-native"
 import React from "react"
-import { TTracksList } from "app/models/core/TTracksList"
-import { TrackCard } from "app/components/Core/TrackCard"
+import { TTrack } from "app/models/core"
+import { TrackCard } from "app/components/Core"
 import { spacing } from "app/theme"
 
 interface TracksListProps {
   category: string
-  tracksList: TTracksList
+  tracksList: TTrack[]
 }
 
 export const TracksList = ({ category, tracksList }: TracksListProps) => {

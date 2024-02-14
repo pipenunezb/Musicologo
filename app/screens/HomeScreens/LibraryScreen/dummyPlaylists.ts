@@ -1,6 +1,6 @@
-import { TPlaylistsList } from "app/models/core/TPlaylistsList"
+import { TPlaylist } from "app/models/core"
 
-export const DUMMY_PLAYLISTS: TPlaylistsList = [
+export const DUMMY_PLAYLISTS: TPlaylist[] = [
   {
     id: "A1",
     title: "Playlist 1",

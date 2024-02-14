@@ -1,6 +1,6 @@
-import { TTracksList } from "app/models/core/TTracksList"
+import { TTrack } from "app/models/core"
 
-export const DUMMY_TRACKS: TTracksList = [
+export const DUMMY_TRACKS: TTrack[] = [
   {
     id: "1",
     title: "Track 1",
