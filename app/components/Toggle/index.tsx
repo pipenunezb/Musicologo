@@ -20,7 +20,6 @@ interface ToggleBaseProps {
   disabled?: boolean
   initialValue?: boolean
   onChange?: (checked: boolean) => void
-  style?: StyleProp<ViewStyle>
   containerStyle?: StyleProp<ViewStyle>
   labelStyle?: StyleProp<TextStyle>
 }

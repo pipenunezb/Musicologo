@@ -1,7 +1,7 @@
 import { TTrack } from "app/models/core/TTrack"
-import { Image, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import React from "react"
-import { Text } from "app/components/Text"
+import { AutoImage, Text } from "app/components"
 import { borderRadius, colors } from "app/theme"
 
 interface TrackCardProps {
@@ -11,7 +11,7 @@ export const TrackCard = ({ track }: TrackCardProps) => {
   const artistsText = Array.isArray(track.artists) ? track.artists.join(", ") : track.artists
   return (
     <View style={styles.container}>
-      <Image source={{ uri: track.imageUri }} style={styles.image} />
+      <AutoImage source={{ uri: track.imageUri }} style={styles.image} />
       <Text style={styles.title} text={track.title} />
       <Text size="xs" style={styles.artists} text={artistsText} numberOfLines={2} />
     </View>

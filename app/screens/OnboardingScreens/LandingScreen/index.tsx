@@ -1,9 +1,8 @@
 import React, { FC } from "react"
-import { Button, Screen, Text } from "app/components"
+import { AutoImage, Button, Screen, SvgIcon, Text } from "app/components"
 import { colors, spacing } from "app/theme"
-import { Image, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { SvgIcon } from "app/components/SvgIcon"
 
 interface LandingScreenProps extends AppStackScreenProps<"LandingScreen"> {}
 
@@ -17,10 +16,9 @@ export const LandingScreen: FC<LandingScreenProps> = ({ navigation }) => {
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.backgroundImageContainer}>
-        <Image
+        <AutoImage
           source={require("assets/images/Onboarding/background-image.jpeg")}
           style={styles.backgroundImage}
-          resizeMode="stretch"
         />
       </View>
       <View style={styles.body}>

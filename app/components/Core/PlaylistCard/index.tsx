@@ -1,6 +1,6 @@
-import { Image, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import React from "react"
-import { Text } from "app/components/Text"
+import { AutoImage, Text } from "app/components"
 import { colors, spacing } from "app/theme"
 
 interface PlaylistCardProps {
@@ -12,7 +12,7 @@ interface PlaylistCardProps {
 export const PlaylistCard = ({ title, numberOfSongs, imageUri }: PlaylistCardProps) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUri }} resizeMode="contain" style={styles.image} />
+      <AutoImage source={{ uri: imageUri }} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text text={title} />
         <Text size="xs" style={styles.subtitle} text={`${numberOfSongs} songs`} />

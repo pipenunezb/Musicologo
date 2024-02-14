@@ -1,9 +1,9 @@
-import { Button, Screen, Text } from "app/components"
+import { AutoImage, Button, Screen, Text } from "app/components"
 import { useStores } from "app/models"
 import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
-import { Image, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/MaterialIcons"
 
 interface ProfileScreenProps extends HomeTabScreenProps<"ProfileScreen"> {}
@@ -23,7 +23,10 @@ export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.body}>
-        <Image source={{ uri: "https://picsum.photos/id/31/200" }} style={styles.profilePicture} />
+        <AutoImage
+          source={{ uri: "https://picsum.photos/id/30/200" }}
+          style={styles.profilePicture}
+        />
         <View style={styles.nameContainer}>
           {isArtist && <View style={styles.emptyView} />}
           <Text text="Jane Doe" preset="subheading" />
