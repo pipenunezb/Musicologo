@@ -1,5 +1,3 @@
-- ActionsSheet integration
-    - NowPlaying component
 - PlaylistDetail screen
 
 - Connect supabase
