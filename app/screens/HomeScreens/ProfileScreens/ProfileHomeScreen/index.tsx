@@ -1,17 +1,21 @@
 import { AutoImage, Button, Screen, Text } from "app/components"
 import { useStores } from "app/models"
-import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
+import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/Entypo"
 
-interface ProfileScreenProps extends HomeTabScreenProps<"ProfileScreen"> {}
+interface ProfileScreenProps extends ProfileStackScreenProps<"ProfileScreen"> {}
 
-export const ProfileScreen: FC<ProfileScreenProps> = () => {
+export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
   const {
     authenticationStore: { logout },
   } = useStores()
+
+  const handleAddNewSong = () => {
+    navigation.navigate("PostNewSongScreen")
+  }
 
   const isArtist = true
 
@@ -33,6 +37,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = () => {
           {isArtist && <Icon name="modern-mic" size={24} color={colors.palette.primary300} />}
         </View>
         <Text style={styles.followersText} text="120 followers" />
+        <Button preset="filled" onPress={handleAddNewSong} text="Add new song" />
         <View style={styles.footer}>
           <Button preset="filled" onPress={logout} tx="common.logOut" />
         </View>

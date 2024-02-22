@@ -3,7 +3,7 @@ import {
   BottomTabScreenProps,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs"
-import { CompositeScreenProps } from "@react-navigation/native"
+import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native"
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -13,11 +13,12 @@ import * as HomeScreens from "app/screens/HomeScreens"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Text } from "app/components"
 import { NowPlaying } from "app/components/Core/NowPlaying"
+import { ProfileNavigator, ProfileStackParamList } from "./ProfileNavigator"
 
 export type HomeTabParamList = {
   HomeScreen: undefined
   LibraryScreen: undefined
-  ProfileScreen: undefined
+  ProfileStackScreens: NavigatorScreenParams<ProfileStackParamList>
   SearchScreen: undefined
 }
 
@@ -110,8 +111,8 @@ export function HomeNavigator() {
         }}
       />
       <Tab.Screen
-        name="ProfileScreen"
-        component={HomeScreens.ProfileScreen}
+        name="ProfileStackScreens"
+        component={ProfileNavigator}
         options={{
           tabBarLabel: ({ focused }) => (
             <Text
