@@ -1,4 +1,5 @@
 - PlaylistDetail screen
+- NowPlaying screen
 
 - Connect supabase
   - GET getPopular (trackList)
