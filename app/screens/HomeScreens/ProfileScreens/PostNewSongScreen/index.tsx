@@ -1,9 +1,8 @@
-import { Button, Screen, Text } from "app/components"
+import { Screen, Text } from "app/components"
 import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
-import Icon from "react-native-vector-icons/Entypo"
 import { PostSongForm } from "./components/PostSongForm"
 
 interface PostNewSongScreenProps extends ProfileStackScreenProps<"PostNewSongScreen"> {}
@@ -16,7 +15,7 @@ export const PostNewSongScreen: FC<PostNewSongScreenProps> = ({ navigation }) =>
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.container}>
-        <Text text="PostNewSongScreen" />
+        <Text text="Post New Song" preset="subheading" />
         <PostSongForm />
       </View>
     </Screen>
@@ -25,6 +24,8 @@ export const PostNewSongScreen: FC<PostNewSongScreenProps> = ({ navigation }) =>
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
     flex: 1,
+    gap: spacing.lg,
   },
 })
