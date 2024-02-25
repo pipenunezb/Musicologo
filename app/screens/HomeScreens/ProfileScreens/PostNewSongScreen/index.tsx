@@ -1,4 +1,4 @@
-import { Screen, Text } from "app/components"
+import { Header, Screen, Text } from "app/components"
 import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
@@ -15,7 +15,7 @@ export const PostNewSongScreen: FC<PostNewSongScreenProps> = ({ navigation }) =>
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.container}>
-        <Text text="Post New Song" preset="subheading" />
+        <Header title="Post New Song" hasBackButton />
         <PostSongForm />
       </View>
     </Screen>
