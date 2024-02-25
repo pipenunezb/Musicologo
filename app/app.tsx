@@ -16,6 +16,7 @@ if (__DEV__) {
   // to only execute this in development.
   require("./devtools/ReactotronConfig.ts")
 }
+import "react-native-url-polyfill/auto"
 import "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
