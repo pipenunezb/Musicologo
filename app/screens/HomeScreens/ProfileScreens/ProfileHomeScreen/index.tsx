@@ -1,5 +1,6 @@
 import { AutoImage, Button, Screen, Text } from "app/components"
-import { useStores } from "app/models"
+import { useUserInfo } from "app/lib/UserContext"
+import { supabase } from "app/lib/supabase"
 import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
@@ -9,15 +10,16 @@ import Icon from "react-native-vector-icons/Entypo"
 interface ProfileScreenProps extends ProfileStackScreenProps<"ProfileScreen"> {}
 
 export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
-  const {
-    authenticationStore: { logout },
-  } = useStores()
+  const logout = () => {
+    supabase.auth.signOut()
+  }
 
   const handleAddNewSong = () => {
     navigation.navigate("PostNewSongScreen")
   }
 
   const isArtist = true
+  const { profile } = useUserInfo()
 
   return (
     <Screen
@@ -33,7 +35,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
         />
         <View style={styles.nameContainer}>
           {isArtist && <View style={styles.emptyView} />}
-          <Text text="Jane Doe" preset="subheading" />
+          <Text text={profile?.username} preset="subheading" />
           {isArtist && <Icon name="modern-mic" size={24} color={colors.palette.primary300} />}
         </View>
         <Text style={styles.followersText} text="120 followers" />

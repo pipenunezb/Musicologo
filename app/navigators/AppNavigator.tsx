@@ -10,10 +10,10 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import * as Screens from "app/screens"
 import Config from "../config"
-import { useStores } from "../models"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
 import { HomeNavigator, HomeTabParamList } from "./HomeTabNavigator"
+import { useUserInfo } from "app/lib/UserContext"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -31,6 +31,7 @@ import { HomeNavigator, HomeTabParamList } from "./HomeTabNavigator"
 export type AppStackParamList = {
   LandingScreen: undefined
   LoginScreen: undefined
+  RegisterScreen: undefined
   HomeScreens: NavigatorScreenParams<HomeTabParamList>
 }
 
@@ -49,23 +50,20 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
+  const { session } = useUserInfo()
 
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.palette.primary500 }}
-      initialRouteName={isAuthenticated ? "HomeScreens" : "LandingScreen"}
+      initialRouteName={session ? "HomeScreens" : "LandingScreen"}
     >
-      {isAuthenticated ? (
-        <>
-          <Stack.Screen name="HomeScreens" component={HomeNavigator} />
-        </>
+      {session ? (
+        <Stack.Screen name="HomeScreens" component={HomeNavigator} />
       ) : (
         <>
           <Stack.Screen name="LandingScreen" component={Screens.LandingScreen} />
           <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
+          <Stack.Screen name="RegisterScreen" component={Screens.RegisterScreen} />
         </>
       )}
     </Stack.Navigator>

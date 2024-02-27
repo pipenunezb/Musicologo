@@ -11,7 +11,7 @@ import {
 import { borderRadius, colors, opacity, spacing, typography } from "../../theme"
 import { Text, TextProps } from "../Text"
 
-type Presets = "filled" | "reversed"
+type Presets = "filled" | "reversed" | "transparent"
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -179,9 +179,11 @@ const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
 const $viewPresets: Record<Presets, StyleProp<ViewStyle>> = {
   filled: { backgroundColor: colors.palette.primary300 },
   reversed: { backgroundColor: colors.palette.neutral800 },
+  transparent: { backgroundColor: "transparent" },
 }
 
 const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
   filled: { color: colors.palette.neutral100 },
   reversed: { color: colors.palette.neutral100 },
+  transparent: { color: colors.palette.primary300 },
 }

@@ -1,6 +1,8 @@
 - PlaylistDetail screen
 - NowPlaying screen
 
+- go to verify your email screen after sign up
+
 - Connect supabase
   - GET getPopular (trackList)
   - GET getRecentlyPlayed (trackList)
