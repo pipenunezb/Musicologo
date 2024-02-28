@@ -28,6 +28,12 @@
     "serve:web": "npx server dist",
     "prebuild:clean": "npx expo prebuild --clean",
     "prebuild": "npx expo prebuild",
+    "clean": "npx react-native-clean-project",
+    "clean:lockFiles": "rm yarn.lock && rm -rf node_modules && cd ios && rm -rf pods && rm Podfile.lock && cd .. && yarn install",
+    "clean:node": "rm -rf node_modules && rm yarn.lock && yarn",
+    "clean:android": "cd android && ./gradlew clean &&  rm /app/build ",
+    "clean:packager": "watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf $TMPDIR/metro-* && rm -rf $TMPDIR/haste-map-*",
+    "clean:env": "rm -f node_modules/react-native-config/ios/ReactNativeConfig/GeneratedDotEnv.m",
     "gen:types": "npx supabase gen types typescript --project-id tsgdkxosnavkkyzliuat > ./app/lib/db_types.ts"
   },
   "dependencies": {

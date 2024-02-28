@@ -7,7 +7,7 @@ import { AppStackScreenProps } from "app/navigators"
 interface LandingScreenProps extends AppStackScreenProps<"LandingScreen"> {}
 
 export const LandingScreen: FC<LandingScreenProps> = ({ navigation }) => {
-  const goToLogin = () => navigation.navigate("LoginScreen")
+  const goToLogin = () => navigation.navigate("LoginWithOTPScreen")
   return (
     <Screen
       preset="auto"

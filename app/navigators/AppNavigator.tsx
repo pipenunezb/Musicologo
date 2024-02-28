@@ -30,8 +30,8 @@ import { useUserInfo } from "app/lib/UserContext"
  */
 export type AppStackParamList = {
   LandingScreen: undefined
-  LoginScreen: undefined
-  RegisterScreen: undefined
+  LoginWithOTPScreen: undefined
+  VerifyOTPScreen: Screens.VerifyOTPScreenParams
   HomeScreens: NavigatorScreenParams<HomeTabParamList>
 }
 
@@ -62,8 +62,8 @@ const AppStack = observer(function AppStack() {
       ) : (
         <>
           <Stack.Screen name="LandingScreen" component={Screens.LandingScreen} />
-          <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
-          <Stack.Screen name="RegisterScreen" component={Screens.RegisterScreen} />
+          <Stack.Screen name="LoginWithOTPScreen" component={Screens.LoginWithOTPScreen} />
+          <Stack.Screen name="VerifyOTPScreen" component={Screens.VerifyOTPScreen} />
         </>
       )}
     </Stack.Navigator>

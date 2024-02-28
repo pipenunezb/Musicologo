@@ -55,22 +55,8 @@ const en = {
   loginScreen: {
     signIn: "Sign In",
     emailFieldLabel: "Email",
-    passwordFieldLabel: "Password",
     emailFieldPlaceholder: "Enter your email address",
-    passwordFieldPlaceholder: "Super secret password here",
-    tapToSignIn: "Tap to sign in!",
-    goToRegister: "Don't have an account? Sign up!",
-  },
-  registerScreen: {
-    signUp: "Sign Up",
-    usernameFieldLabel: "Username",
-    emailFieldLabel: "Email",
-    passwordFieldLabel: "Password",
-    usernameFieldPlaceholder: "Enter your username",
-    emailFieldPlaceholder: "Enter your email address",
-    passwordFieldPlaceholder: "Super secret password here",
-    tapToSignUp: "Tap to sign up!",
-    goToLogin: "Already have an account? Sign in!",
+    tapToSignIn: "Send OTP!",
   },
   demoNavigator: {
     componentsTab: "Components",
