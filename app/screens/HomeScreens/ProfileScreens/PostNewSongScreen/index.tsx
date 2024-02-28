@@ -1,4 +1,4 @@
-import { Header, Screen, Text } from "app/components"
+import { Header, Screen } from "app/components"
 import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
@@ -15,7 +15,7 @@ export const PostNewSongScreen: FC<PostNewSongScreenProps> = ({ navigation }) =>
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.container}>
-        <Header title="Post New Song" hasBackButton />
+        <Header title="Post New Song" hasBackButton style={styles.header} />
         <PostSongForm />
       </View>
     </Screen>
@@ -27,5 +27,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     gap: spacing.lg,
+  },
+  header: {
+    paddingHorizontal: spacing.md,
   },
 })

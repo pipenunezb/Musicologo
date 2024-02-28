@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native"
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native"
 import { PressableOpacity } from "../PressableOpacity"
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "@react-navigation/native"
@@ -7,15 +7,16 @@ import React from "react"
 import { colors, spacing } from "app/theme"
 
 interface HeaderProps {
-  title: string
+  title?: string
   hasBackButton?: boolean
   IconButton?: React.ReactNode
+  style?: StyleProp<ViewStyle>
 }
 
-export const Header = ({ title, hasBackButton, IconButton }: HeaderProps) => {
+export const Header = ({ title, hasBackButton, IconButton, style }: HeaderProps) => {
   const navigation = useNavigation()
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {hasBackButton ? (
         <PressableOpacity style={styles.backContainer} onPress={navigation.goBack}>
           <Icon name="arrow-back" size={24} color={colors.text} />
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     width: "100%",
   },

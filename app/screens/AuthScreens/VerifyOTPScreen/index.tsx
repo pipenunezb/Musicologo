@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native"
 
 import { AppStackScreenProps } from "../../../navigators"
 import { supabase } from "app/lib/supabase"
-import { Screen, Text } from "app/components"
+import { Header, Screen, Text } from "app/components"
 import { colors, spacing } from "app/theme"
 import { OTPInput } from "./components/OTPInput/index"
 
@@ -41,6 +41,7 @@ export const VerifyOTPScreen: FC<VerifyOTPScreenProps> = observer(function Verif
       backgroundColor={colors.palette.primary600}
       safeAreaEdges={["top", "bottom"]}
     >
+      <Header hasBackButton />
       <Text preset="subheading" text={`Enter the code we just sent you to: ${email}`} />
       <OTPInput onChange={setToken} style={styles.input} />
       <Text style={styles.errorText} text={error} />
@@ -51,7 +52,6 @@ export const VerifyOTPScreen: FC<VerifyOTPScreenProps> = observer(function Verif
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.xxl,
   },
   errorText: {
     color: colors.palette.angry100,

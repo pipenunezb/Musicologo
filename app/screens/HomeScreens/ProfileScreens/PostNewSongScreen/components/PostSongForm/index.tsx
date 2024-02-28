@@ -72,7 +72,7 @@ export const PostSongForm = () => {
       {songName ? (
         <Text text={songName} style={styles.songName} />
       ) : (
-        <Button preset="reversed" text="choose song" onPress={selectSongFile} />
+        <Button preset="transparent" text="choose song" onPress={selectSongFile} />
       )}
 
       <Button disabled={isSubmitDisabled} text="Submit" onPress={postNewSong} />
