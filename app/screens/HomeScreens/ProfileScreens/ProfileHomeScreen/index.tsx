@@ -1,15 +1,18 @@
-import { AutoImage, Button, Screen, Text } from "app/components"
+import { Button, Screen, Text } from "app/components"
 import { useUserInfo } from "app/lib/UserContext"
 import { supabase } from "app/lib/supabase"
 import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/Entypo"
+import { AvatarSelect } from "./AvatarSelect"
+import { downloadAvatar } from "app/lib/api"
 
 interface ProfileScreenProps extends ProfileStackScreenProps<"ProfileScreen"> {}
 
 export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
+  const [avatarUrl, setAvatarUrl] = useState("")
   const logout = () => {
     supabase.auth.signOut()
   }
@@ -18,8 +21,20 @@ export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
     navigation.navigate("PostNewSongScreen")
   }
 
-  const isArtist = true
   const { profile } = useUserInfo()
+  const isArtist = profile?.is_artist
+
+  useEffect(() => {
+    if (profile?.avatar_url) {
+      downloadAvatar(profile.avatar_url).then((url) => {
+        setAvatarUrl(url)
+      })
+    }
+  }, [])
+
+  const handleBecomeAnArtist = () => {
+    navigation.navigate("BecomeAnArtistScreen")
+  }
 
   return (
     <Screen
@@ -29,17 +44,19 @@ export const ProfileScreen: FC<ProfileScreenProps> = ({ navigation }) => {
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.body}>
-        <AutoImage
-          source={{ uri: "https://picsum.photos/id/30/200" }}
-          style={styles.profilePicture}
-        />
-        <View style={styles.nameContainer}>
-          {isArtist && <View style={styles.emptyView} />}
-          <Text text={profile?.username} preset="subheading" />
-          {isArtist && <Icon name="modern-mic" size={24} color={colors.palette.primary300} />}
-        </View>
-        <Text style={styles.followersText} text="120 followers" />
-        <Button preset="filled" onPress={handleAddNewSong} text="Add new song" />
+        <AvatarSelect imageUri={avatarUrl} />
+        {isArtist ? (
+          <>
+            <View style={styles.nameContainer}>
+              <View style={styles.emptyView} />
+              <Text text={profile?.username ?? ""} preset="subheading" />
+              <Icon name="modern-mic" size={24} color={colors.palette.primary300} />
+            </View>
+            <Button preset="filled" onPress={handleAddNewSong} text="Add new song" />
+          </>
+        ) : (
+          <Button preset="transparent" onPress={handleBecomeAnArtist} text="Become an artist" />
+        )}
         <View style={styles.footer}>
           <Button preset="filled" onPress={logout} tx="common.logOut" />
         </View>
@@ -60,9 +77,6 @@ const styles = StyleSheet.create({
   emptyView: {
     width: 24,
   },
-  followersText: {
-    color: colors.palette.primary300,
-  },
   footer: {
     bottom: 0,
     padding: spacing.md,
@@ -73,10 +87,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     gap: spacing.sm,
-  },
-  profilePicture: {
-    borderRadius: 100,
-    height: 200,
-    width: 200,
   },
 })

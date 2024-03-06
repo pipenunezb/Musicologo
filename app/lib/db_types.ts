@@ -17,6 +17,7 @@ export type Database = {
           id: number
           song_name: string | null
           song_url: string | null
+          user_id: string
         }
         Insert: {
           artist?: string | null
@@ -25,6 +26,7 @@ export type Database = {
           id?: number
           song_name?: string | null
           song_url?: string | null
+          user_id?: string
         }
         Update: {
           artist?: string | null
@@ -33,8 +35,49 @@ export type Database = {
           id?: number
           song_name?: string | null
           song_url?: string | null
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_AllTracks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          id: string
+          is_artist: boolean | null
+          updated_at: string | null
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          id: string
+          is_artist?: boolean | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          id?: string
+          is_artist?: boolean | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       test: {
         Row: {

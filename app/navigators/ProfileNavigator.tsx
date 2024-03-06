@@ -10,6 +10,7 @@ import { colors } from "app/theme"
 export type ProfileStackParamList = {
   ProfileScreen: undefined
   PostNewSongScreen: undefined
+  BecomeAnArtistScreen: undefined
 }
 
 const exitRoutes = Config.exitRoutes
@@ -29,6 +30,7 @@ const ProfileStack = observer(function ProfileStack() {
     >
       <Stack.Screen name="ProfileScreen" component={ProfileScreens.ProfileScreen} />
       <Stack.Screen name="PostNewSongScreen" component={ProfileScreens.PostNewSongScreen} />
+      <Stack.Screen name="BecomeAnArtistScreen" component={ProfileScreens.BecomeAnArtistScreen} />
     </Stack.Navigator>
   )
 })

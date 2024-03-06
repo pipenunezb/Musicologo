@@ -1,12 +1,9 @@
 import { Session } from "@supabase/supabase-js"
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { supabase } from "./supabase"
+import { getProfile, UserProfile } from "./api"
 
 // definir context para guardar el session y el profile
-export interface UserProfile {
-  username: string
-  avatarUrl?: string
-}
 
 export interface UserInfo {
   session: Session | null
@@ -34,22 +31,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
-  const getProfile = async () => {
-    if (!userInfo.session) return
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userInfo.session.user.id)
-    if (error) {
-      console.log(error)
-    } else {
-      setUserInfo({ ...userInfo, profile: data[0] })
+  const fetchProfile = async () => {
+    if (userInfo.session) {
+      getProfile(userInfo.session).then((profile) => {
+        setUserInfo({ ...userInfo, profile })
+      })
     }
   }
 
   useEffect(() => {
-    getProfile()
-  }, [userInfo.session])
+    fetchProfile()
+  }, [userInfo.session, userInfo.profile])
 
   return <UserContext.Provider value={userInfo}>{children}</UserContext.Provider>
 }

@@ -3,11 +3,11 @@ import { ProfileStackScreenProps } from "app/navigators/ProfileNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
-import { PostSongForm } from "./components/PostSongForm"
+import { BecomeAnArtistForm } from "./components/BecomeAnArtistForm"
 
-interface PostNewSongScreenProps extends ProfileStackScreenProps<"PostNewSongScreen"> {}
+interface BecomeAnArtistScreenProps extends ProfileStackScreenProps<"BecomeAnArtistScreen"> {}
 
-export const PostNewSongScreen: FC<PostNewSongScreenProps> = () => {
+export const BecomeAnArtistScreen: FC<BecomeAnArtistScreenProps> = () => {
   return (
     <Screen
       preset="auto"
@@ -15,8 +15,8 @@ export const PostNewSongScreen: FC<PostNewSongScreenProps> = () => {
       safeAreaEdges={["top", "bottom"]}
     >
       <View style={styles.container}>
-        <Header title="Post New Song" hasBackButton style={styles.header} />
-        <PostSongForm />
+        <Header title="Become An Artist" hasBackButton style={styles.header} />
+        <BecomeAnArtistForm />
       </View>
     </Screen>
   )

@@ -5,11 +5,15 @@ import React, { useCallback, useState } from "react"
 import { View, StyleSheet } from "react-native"
 import DocumentPicker from "react-native-document-picker"
 
-export const PostSongForm = () => {
+interface PostSongFormProps {
+  onSuccessfulPost?: () => void
+}
+
+export const PostSongForm = ({ onSuccessfulPost }: PostSongFormProps) => {
   const [songTitle, setSongTitle] = useState("")
-  const [artistName, setArtistName] = useState("")
   const [songUri, setSongUri] = useState("")
   const [songName, setSongName] = useState("")
+  const [isPostingSong, setIsPostingSong] = useState(false)
 
   const selectSongFile = useCallback(async () => {
     try {
@@ -25,50 +29,52 @@ export const PostSongForm = () => {
 
   const storeSongInSupabase = async () => {
     try {
-      const copySongUri = songUri
-
-      const songFileExt = copySongUri.split(".").pop()
+      const songFileExt = songUri.split(".").pop()
       // eslint-disable-next-line no-useless-escape
-      const songFileName = copySongUri.replace(/^.*[\\\/]/, "")
+      const songFileName = songUri.replace(/^.*[\\\/]/, "")
       const songFilePath = `${Date.now()}.${songFileExt}`
 
       const formData = new FormData()
       const song = {
-        uri: copySongUri,
+        uri: songUri,
         name: songFileName,
         type: `audio/${songFileExt}`,
       } as unknown as Blob
       formData.append("file", song)
 
-      await supabase.storage.from("songs").upload(songFilePath, formData)
+      const { error } = await supabase.storage.from("songs").upload(songFilePath, formData)
+      if (error) throw error
 
       return songFilePath
     } catch (error) {
-      return console.error("Error storing song: ", error)
+      console.error("Error storing new song: ", error)
     }
   }
 
   const postNewSong = async () => {
     try {
+      setIsPostingSong(true)
       const songFilePath = await storeSongInSupabase()
-      await supabase.from("songs").insert([
-        {
-          title: songTitle,
-          artist: artistName,
-          song_file: songFilePath,
-        },
-      ])
+      const { error } = await supabase.from("AllTracks").insert({
+        song_name: songTitle,
+        song_url: songFilePath,
+      })
+
+      if (error) throw error
+
+      onSuccessfulPost?.()
     } catch (error) {
       console.error("Error posting new song: ", error)
+    } finally {
+      setIsPostingSong(false)
     }
   }
 
-  const isSubmitDisabled = !songTitle || !artistName || !songUri
+  const isSubmitDisabled = !songTitle || !songUri || isPostingSong
 
   return (
     <View style={styles.container}>
       <TextField placeholder="Song Title" onChangeText={setSongTitle} />
-      <TextField placeholder="Artist Name" onChangeText={setArtistName} />
       {songName ? (
         <Text text={songName} style={styles.songName} />
       ) : (
