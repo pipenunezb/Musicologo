@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 
@@ -14,9 +13,7 @@ export type VerifyOTPScreenParams = {
   email: string
 }
 
-export const VerifyOTPScreen: FC<VerifyOTPScreenProps> = observer(function VerifyOTPScreen({
-  route,
-}) {
+export const VerifyOTPScreen: FC<VerifyOTPScreenProps> = ({ route }) => {
   const { email } = route.params ?? {}
   const [token, setToken] = useState("")
   const [error, setError] = useState("")
@@ -47,7 +44,7 @@ export const VerifyOTPScreen: FC<VerifyOTPScreenProps> = observer(function Verif
       <Text style={styles.errorText} text={error} />
     </Screen>
   )
-})
+}
 
 const styles = StyleSheet.create({
   container: {

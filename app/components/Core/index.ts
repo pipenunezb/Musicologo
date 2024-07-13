@@ -1,2 +1,2 @@
-export * from "./PlaylistCard"
-export * from "./TrackCard"
+export * from "./NowPlaying"
+export * from "./PlayingControls"

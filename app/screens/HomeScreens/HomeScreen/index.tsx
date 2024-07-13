@@ -1,43 +1,37 @@
-import { Screen, Text } from "app/components"
-import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
+import { Screen } from "app/components"
 import { colors, spacing } from "app/theme"
-import React, { FC, useEffect, useState } from "react"
+import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
-import { TracksList } from "./components/TracksList"
-import { SvgIcon } from "app/components/SvgIcon"
+import { MyPlaylistsList } from "./components/MyPlaylistsList"
+import { AppStackScreenProps } from "app/navigators"
+import { DUMMY_PLAYLISTS } from "../LibraryScreen/dummyPlaylists"
+import { HomeHeader } from "./components/HomeHeader"
+import { AllSongs } from "./components/AllSongs"
 import { DUMMY_TRACKS } from "./dummyTracks"
-import { Posts, fetchPosts } from "app/lib/api"
 
-interface HomeScreenProps extends HomeTabScreenProps<"HomeScreen"> {}
+interface HomeScreenProps extends AppStackScreenProps<"HomeScreen"> {}
 
-export const HomeScreen: FC<HomeScreenProps> = () => {
-  const [posts, setPosts] = useState<Posts>([])
-
-  useEffect(() => {
-    fetchPosts().then((data) => setPosts(data))
-  }, [])
-
+export const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
+  const goToProfile = () => navigation.navigate("ProfileScreen")
+  const goToSearch = () => navigation.navigate("SearchScreen")
+  const goToLibrary = () => navigation.navigate("LibraryScreen")
+  // Get playlists
+  // Get songs
   return (
     <Screen
-      preset="auto"
+      preset="fixed"
+      contentContainerStyle={styles.container}
       backgroundColor={colors.palette.primary600}
       safeAreaEdges={["top", "bottom"]}
     >
+      <HomeHeader onPressProfile={goToProfile} onPressSearch={goToSearch} />
       <View style={styles.body}>
-        <View style={styles.row}>
-          <SvgIcon name="Musicologo" size={40} />
-          <Text style={styles.text} tx="common.appName" preset="subheading" />
-        </View>
-
-        {Boolean(posts.length) &&
-          posts.map((post) => (
-            <View key={post.id}>
-              <Text>{post.title}</Text>
-              <Text>{post.description}</Text>
-            </View>
-          ))}
-        <TracksList category="Popular" tracksList={DUMMY_TRACKS} />
-        <TracksList category="Recently Played" tracksList={DUMMY_TRACKS} />
+        <AllSongs
+          songsList={DUMMY_TRACKS}
+          ListHeaderComponent={
+            <MyPlaylistsList playlistsList={DUMMY_PLAYLISTS} onPressViewMore={goToLibrary} />
+          }
+        />
       </View>
     </Screen>
   )
@@ -49,12 +43,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     padding: spacing.md,
   },
-  row: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing.md,
-  },
-  text: {
-    color: colors.palette.neutral100,
+  container: {
+    flex: 1,
   },
 })

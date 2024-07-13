@@ -1,4 +1,5 @@
 import { Screen, Text, TextField } from "app/components"
+import { BackButton } from "app/components/BackButton"
 import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
 import { colors, spacing } from "app/theme"
 import React, { FC, useEffect, useState } from "react"
@@ -26,7 +27,8 @@ export const SearchScreen: FC<SearchScreenProps> = () => {
       backgroundColor={colors.palette.primary600}
       safeAreaEdges={["top", "bottom"]}
     >
-      <View style={styles.body}>
+      <View style={styles.header}>
+        <BackButton color={colors.palette.primary200} />
         <TextField
           value={searchText}
           onChangeText={setSearchText}
@@ -38,7 +40,9 @@ export const SearchScreen: FC<SearchScreenProps> = () => {
             <Icon style={styles.icon} name="search" size={24} color={colors.palette.primary200} />
           )}
         />
-        <Text tx="HomeScreens.SearchScreen.notFound" />
+      </View>
+      <View style={styles.body}>
+        <Text style={styles.notFoundText} tx="HomeScreens.SearchScreen.notFound" />
       </View>
     </Screen>
   )
@@ -46,7 +50,6 @@ export const SearchScreen: FC<SearchScreenProps> = () => {
 
 const styles = StyleSheet.create({
   body: {
-    alignItems: "center",
     flex: 1,
     gap: spacing.md,
     padding: spacing.md,
@@ -55,10 +58,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.md,
+    paddingHorizontal: spacing.md,
+  },
   icon: {
     paddingRight: spacing.sm,
   },
+  notFoundText: {
+    textAlign: "center",
+  },
   searchInput: {
-    width: "100%",
+    flex: 1,
   },
 })

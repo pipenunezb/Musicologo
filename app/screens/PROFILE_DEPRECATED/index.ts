@@ -1,3 +1,3 @@
 export * from "./PostNewSongScreen"
-export * from "./ProfileHomeScreen"
+export * from "../HomeScreens/ProfileScreen"
 export * from "./BecomeAnArtistScreen"

@@ -12,6 +12,7 @@ import { borderRadius, colors, opacity, spacing, typography } from "../../theme"
 import { Text, TextProps } from "../Text"
 
 type Presets = "filled" | "reversed" | "transparent"
+type Size = "sm" | "md" | "lg"
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -72,6 +73,10 @@ export interface ButtonProps extends PressableProps {
    */
   children?: React.ReactNode
   /**
+   * Button size.
+   */
+  size?: Size
+  /**
    * disabled prop, accessed directly for declarative styling reasons.
    * https://reactnative.dev/docs/pressable#disabled
    */
@@ -98,6 +103,7 @@ export function Button(props: ButtonProps) {
     children,
     RightAccessory,
     LeftAccessory,
+    size = "lg",
     disabled,
     ...rest
   } = props
@@ -107,12 +113,13 @@ export function Button(props: ButtonProps) {
     return [
       styles.baseView,
       $viewPresets[preset],
+      $viewSizes[size],
       $viewStyleOverride,
       !!pressed && styles.pressedView,
       !!disabled && styles.disabled,
     ]
   }
-  const $textStyle = [styles.baseText, $textPresets[preset], $textStyleOverride]
+  const $textStyle = [styles.baseText, $textPresets[preset], $textSizes[size], $textStyleOverride]
 
   return (
     <Pressable
@@ -160,7 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.md,
     flexDirection: "row",
     justifyContent: "center",
-    minHeight: 56,
+    // minHeight: 56,
     overflow: "hidden",
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.sm,
@@ -176,9 +183,21 @@ const styles = StyleSheet.create({
 const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
 const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
 
+const $viewSizes: Record<Size, StyleProp<ViewStyle>> = {
+  sm: { paddingVertical: spacing.xxxs, paddingHorizontal: spacing.xs },
+  md: { paddingVertical: spacing.xxs, paddingHorizontal: spacing.xs },
+  lg: { paddingVertical: spacing.sm, paddingHorizontal: spacing.md },
+}
+
+const $textSizes: Record<Size, StyleProp<TextStyle>> = {
+  sm: { fontSize: 12, fontWeight: "400", lineHeight: 16 },
+  md: { fontSize: 14, fontWeight: "400", lineHeight: 18 },
+  lg: { fontSize: 16, fontWeight: "500", lineHeight: 20 },
+}
+
 const $viewPresets: Record<Presets, StyleProp<ViewStyle>> = {
   filled: { backgroundColor: colors.palette.primary300 },
-  reversed: { backgroundColor: colors.palette.neutral800 },
+  reversed: { backgroundColor: colors.palette.primary400 },
   transparent: { backgroundColor: "transparent" },
 }
 

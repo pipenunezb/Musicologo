@@ -1,12 +1,11 @@
-import { Screen, Text } from "app/components"
-import { HomeTabScreenProps } from "app/navigators/HomeTabNavigator"
+import { Header, ListItem, Screen, Text } from "app/components"
 import { colors, spacing } from "app/theme"
 import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
 import { DUMMY_PLAYLISTS } from "./dummyPlaylists"
-import { PlaylistCard } from "app/components/Core/PlaylistCard"
+import { AppStackScreenProps } from "app/navigators"
 
-interface LibraryScreenProps extends HomeTabScreenProps<"LibraryScreen"> {}
+interface LibraryScreenProps extends AppStackScreenProps<"LibraryScreen"> {}
 
 export const LibraryScreen: FC<LibraryScreenProps> = () => {
   return (
@@ -15,13 +14,13 @@ export const LibraryScreen: FC<LibraryScreenProps> = () => {
       backgroundColor={colors.palette.primary600}
       safeAreaEdges={["top", "bottom"]}
     >
+      <Header hasBackButton title="My Playlists" />
       <View style={styles.body}>
-        <Text tx="HomeScreens.LibraryScreen.title" preset="subheading" />
         {DUMMY_PLAYLISTS.map((playlist) => (
-          <PlaylistCard
+          <ListItem
             key={playlist.id}
             title={playlist.title}
-            numberOfSongs={playlist.numberOfSongs}
+            subtitle={`${playlist.numberOfSongs} songs`}
             imageUri={playlist.imageUri}
           />
         ))}
@@ -33,7 +32,7 @@ export const LibraryScreen: FC<LibraryScreenProps> = () => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    gap: spacing.md,
+    gap: spacing.sm,
     padding: spacing.md,
   },
 })

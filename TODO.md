@@ -26,9 +26,10 @@ Una app solamente para escuchar musica.
   - Reproducciones **(opcional)**
 - [ ] **Profile Screen:**
   - Nombre (editable) y correo
+  - Logout
+- [ ] **Library Screen:**
   - Mis playlists
   - Crear playlist
-  - Logout
 - [ ] **Playlist Screen:**
   - Portada
   - Nombre (editable)
