@@ -1,6 +1,6 @@
 # MUSICOLOGO
 
-Una app solamente para escuchar musica del nepe.
+Una app solamente para escuchar musica.
 
 ## 📱 Frontend
 
